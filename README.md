@@ -1,5 +1,7 @@
 # Armenian Art Store Analysis
 
+Group 3
+
 Authors: <br>
 
 Marina Kochinyan PM/PO <br>
