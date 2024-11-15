@@ -72,21 +72,6 @@ def delete_event(db: Session, event_id: int):
         db.commit()
     return db_event
 
-# VARIANTEVENT TABLE
-def create_variant_event(db: Session, variant_event: VariantEventCreate):
-    db_variant_event = VariantEvent(VariantId=variant_event.variant_id, EventId=variant_event.event_id)
-    db.add(db_variant_event)
-    db.commit()
-    db.refresh(db_variant_event)
-    return db_variant_event
-
-def delete_variant_event(db: Session, variant_event_id: int):
-    db_variant_event = db.query(VariantEvent).filter(VariantEvent.Id == variant_event_id).first()
-    if db_variant_event:
-        db.delete(db_variant_event)
-        db.commit()
-    return db_variant_event
-
 # PRODUCTS TABLE
 def create_product(db: Session, product: ProductCreate):
     db_product = Product(
