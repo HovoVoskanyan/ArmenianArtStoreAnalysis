@@ -1,19 +1,19 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import numpy as np
-from sqlalchemy import create_engine, Session
-import random
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import sessionmaker
 
-# Fetch variants from the db schema
-variants = session.execute("SELECT * FROM db.Variants").fetchall()
+# Initialize database connection
+DATABASE_URL = "postgresql+psycopg2://postgres:group3@db:5432/ArmenianArtStore"  
+engine = create_engine(DATABASE_URL)
+Session = sessionmaker(bind=engine)
+session = Session()
+
+# Fetch variants from the Variants table
+variants = session.execute(text("SELECT * FROM public.Variants")).fetchall()
 
 # Process variant statistics
 variant_stats = {
-    variant["VariantId"]: {"alpha": variant["alpha"], "beta": variant["beta"]}
+    variant.VariantId: {"alpha": variant.alpha, "beta": variant.beta}
     for variant in variants
 }
 
@@ -33,11 +33,15 @@ def record_user_feedback(user_id, variant_id, event_success):
     else:
         variant_stats[variant_id]["beta"] += 1
 
-    # Update the alpha and beta values in the db schema
-    session.execute("""
-        UPDATE db.Variants
-        SET alpha = :alpha, beta = :beta
-        WHERE VariantId = :variant_id
-    """, {"alpha": variant_stats[variant_id]["alpha"], "beta": variant_stats[variant_id]["beta"], "variant_id": variant_id})
+    # Update the alpha and beta values in the Variants table
+    session.execute(
+        text("""
+            UPDATE public.Variants
+            SET alpha = :alpha, beta = :beta
+            WHERE VariantId = :variant_id
+        """),
+        {"alpha": variant_stats[variant_id]["alpha"], 
+         "beta": variant_stats[variant_id]["beta"], 
+         "variant_id": variant_id}
+    )
     session.commit()
-
