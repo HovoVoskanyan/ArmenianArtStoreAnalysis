@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+
+pgadmin_data/
+postgres_data/
 # custom
 feedback.md
 
