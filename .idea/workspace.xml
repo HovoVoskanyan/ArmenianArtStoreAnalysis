@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46f8f9f4-a4e2-4091-906a-89b154031a88" name="Changes" comment="Database creation">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="46f8f9f4-a4e2-4091-906a-89b154031a88" name="Changes" comment="changes in crud.py">
+      <change beforePath="$PROJECT_DIR$/.idea/ArmenianArtStoreAnalysis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ArmenianArtStoreAnalysis.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArmenianArtStore/etl/crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/ArmenianArtStore/etl/crud.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +43,7 @@
     "Python.models.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "db",
+    "last_opened_file_path": "D:/PycharmProjects/ArmenianArtStoreAnalysis",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -75,12 +76,26 @@
       <updated>1731589453029</updated>
       <workItem from="1731589454723" duration="14379000" />
       <workItem from="1731653110655" duration="61000" />
-      <workItem from="1731680626805" duration="1979000" />
+      <workItem from="1731680626805" duration="2551000" />
+      <workItem from="1732114277025" duration="446000" />
     </task>
+    <task id="LOCAL-00001" summary="changes in crud.py">
+      <option name="closed" value="true" />
+      <created>1731682676858</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1731682676858</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="changes in crud.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="changes in crud.py" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ArmenianArtStoreAnalysis$models.coverage" NAME="models Coverage Results" MODIFIED="1731595400493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ArmenianArtStore/etl" />
