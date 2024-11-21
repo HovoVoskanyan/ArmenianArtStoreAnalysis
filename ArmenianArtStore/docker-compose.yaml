@@ -76,10 +76,10 @@ services:
   app:
     container_name: streamlit_app
     build:
-      context: ./app  
+      context: ./front  
       dockerfile: Dockerfile
     volumes:
-      - ./app:/app
+      - ./front:/app
     ports:
       - "8501:8501"  
     environment:

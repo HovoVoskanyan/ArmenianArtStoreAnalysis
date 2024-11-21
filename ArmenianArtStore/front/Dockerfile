@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # set work directory
-WORKDIR /app
+WORKDIR /front
 
 
 # Copy the requirements file and install dependencies
@@ -23,4 +23,4 @@ COPY . .
 EXPOSE 8501
 
 # Run the Streamlit application
-CMD ["streamlit", "run", "app1.py", "--server.port=8501", "--server.headless=true", "--server.runOnSave=true"]
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.headless=true", "--server.runOnSave=true"]
