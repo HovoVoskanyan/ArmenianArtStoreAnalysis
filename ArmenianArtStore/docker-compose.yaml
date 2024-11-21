@@ -59,3 +59,16 @@ services:
           - DATABASE_URL=${DATABASE_URL}
       depends_on:
           - db
+  ds:
+    container_name: ds
+    build:
+      context: ./ds
+      dockerfile: Dockerfile
+    volumes:
+      - ./ds:/ds  # Mount the local ds directory
+    ports:
+      - 8888:8888  # Useful if using Jupyter or other DS tools
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      - db
