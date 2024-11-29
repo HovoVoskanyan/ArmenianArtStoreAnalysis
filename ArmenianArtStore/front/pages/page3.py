@@ -20,7 +20,7 @@ Features:
 
 Directory Structure:
     - styles/
-        - Contains external CSS and helper functions for generating styles (e.g., `style1.css`).
+        - Contains external CSS and helper functions for generating styles (e.g., `style3.css`).
     - images/
         - Contains images for special offers, catalog items, and footer icons.
     - pages/
@@ -56,7 +56,7 @@ BACKGROUND_DIR = os.path.join(IMAGES_DIR, "background")
 STYLES_DIR = os.path.join(PROJECT_DIR, "styles")
 
 # Set the background image
-background_file = os.path.join(BACKGROUND_DIR, "background1.png")
+background_file = os.path.join(BACKGROUND_DIR, "background3.png")
 st.markdown(generate_background_style(background_file), unsafe_allow_html=True)
 
 # Function to apply external CSS
@@ -67,7 +67,7 @@ def apply_css():
     Raises:
     - FileNotFoundError: If the CSS file does not exist at the specified path.
     """
-    css_path = os.path.join(STYLES_DIR, "style1.css")
+    css_path = os.path.join(STYLES_DIR, "style3.css")
     try:
         with open(css_path, "r") as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
