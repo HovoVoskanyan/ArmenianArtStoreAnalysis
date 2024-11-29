@@ -2,56 +2,39 @@ from loguru import logger
 
 
 from sqlalchemy import create_engine,Column,Integer,String,Float, DATE, DateTime, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from datetime import datetime
 from database import Base, engine
 
-Base= declarative_base()
+Base = declarative_base()
 
-class User(Base):
-    __tablename__ = "Users"
-    UserId = Column(Integer, primary_key=True)
-    DeviceType = Column(String(50))
-    UserType = Column(String(50))
-
-class Variant(Base):
-    __tablename__ = "Variants"
-    VariantId = Column(Integer, primary_key=True, autoincrement=True)
-    Name = Column(Integer, default=1)
-    alpha = Column(Float, default=1.0)
-    beta = Column(Float, default=1.0)
 
 class Event(Base):
     __tablename__ = "Events"
     EventId = Column(Integer, primary_key=True, autoincrement=True)
     EventName = Column(Integer)
+class Project(Base):
+    __tablename__ = "Projects"
+    project_id = Column(Integer, primary_key=True, autoincrement=True)
+    project_description = Column(String(255))
+    bandits_qty = Column(Integer)
+    start_date = Column(DateTime)
+class Bandit(Base):
+    __tablename__ = "Bandits"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    project_id = Column(Integer, ForeignKey("Projects.project_id"))
+    name = Column(String(255))
+    alpha = Column(Float)
+    beta = Column(Float)
+    n = Column(Integer)
+    updated_date = Column(DateTime, default=datetime.utcnow)
+class UserEvent(Base):
+    __tablename__ = "User_Events"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    project_id = Column(Integer, ForeignKey("Projects.project_id"))
+    bandit_id = Column(Integer, ForeignKey("Bandits.id"))
+    event_id = Column(Integer, ForeignKey("Events.EventId"))
+    event_date = Column(DateTime, default=datetime.utcnow)
 
-class VariantEvent(Base):
-    __tablename__ = "VariantEvent"
-    Id = Column(Integer, primary_key=True)
-    VariantId = Column(Integer, ForeignKey("Variants.VariantId"))
-    EventId = Column(Integer, ForeignKey("Events.EventId"))
-
-class Product(Base):
-    __tablename__ = "Products"
-    ProductId = Column(Integer, primary_key=True, autoincrement=True)
-    Name = Column(String(100))
-    Description = Column(String(1000))
-    Images = Column(String(1000))
-    UnitPrice = Column(Float, nullable=False)
-    CreationDate = Column(DateTime, default=datetime.utcnow)
-    AuthorFullName = Column(String(255))
-    Type = Column(Integer)
-
-class Order(Base):
-    __tablename__ = "Orders"
-    OrderId = Column(Integer, primary_key=True, autoincrement=True)
-    OrderDate = Column(DateTime, default=datetime.utcnow, nullable=False)
-    ProductId = Column(Integer, ForeignKey("Products.ProductId"))
-    UserId = Column(Integer, ForeignKey("Users.UserId"), nullable=False)
-    VariantId = Column(Integer, ForeignKey("Variants.VariantId"), nullable=False)
-
-
-Base.metadata.drop_all(engine)  # Drops all tables
 Base.metadata.create_all(engine)  # Creates all tables
