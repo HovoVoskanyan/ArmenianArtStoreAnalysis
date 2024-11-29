@@ -1,46 +1,47 @@
-import numpy as np 
-from sqlalchemy import create_engine, text 
-from sqlalchemy.orm import sessionmaker
+def select_bandit(bandits):
+    """
+    Selects a bandit using Thompson Sampling.
 
-DATABASE_URL = "postgresql+psycopg2://postgres:group3@db:5432/ArmenianArtStore"  
-engine = create_engine(DATABASE_URL)
-Session = sessionmaker(bind=engine)
-session = Session()
+    Receives the bandits, applies Thompson Sampling to select one,
+    and returns the chosen bandit's details.
 
-# Fetch variants from the Variants table
-variants = session.execute(text("SELECT * FROM public.Variants")).fetchall()
+    Parameters:
+    - bandits: Our project's bandits.
 
-# Process variant statistics
-variant_stats = {
-    variant.VariantId: {"alpha": variant.alpha, "beta": variant.beta}
-    for variant in variants
-}
+    Returns:
+    - Bandit: The chosen bandit's details or None if no bandits are provided.
+    """
+    if not bandits:
+        return {"message": "No bandits provided"}
 
-# Thompson Sampling function
-def thompson_sampling():
-    samples = {}
-    for variant_id, stats in variant_stats.items():
-        # Sample from the Beta distribution
-        sample = np.random.beta(stats["alpha"], stats["beta"])
-        samples[variant_id] = sample
-    return max(samples, key=samples.get)
+    # Perform Thompson Sampling to choose a bandit
+    samples = [np.random.beta(bandit.alpha, bandit.beta) for bandit in bandits]
 
-# Function to record user feedback and update the database
-def record_user_feedback(user_id, variant_id, event_success):
-    if event_success:
-        variant_stats[variant_id]["alpha"] += 1
+    # Select the bandit with the highest sample
+    chosen_bandit = bandits[np.argmax(samples)]
+
+    return chosen_bandit
+
+
+def apply_reward(chosen_bandit, liked: bool):
+    """
+    Applies user feedback to the chosen bandit's performance parameters.
+
+    Parameters:
+    - chosen_bandit (Bandit): The previously selected bandit.
+    - liked (bool): Whether the user liked the bandit's output (True) or not (False).
+
+    Returns:
+    - bool: True if the feedback was successfully applied, False otherwise.
+    """
+    if not chosen_bandit:
+        return {"message": "Chosen bandit not found"}
+
+    # Update bandit's performance based on user feedback
+    if liked:
+        chosen_bandit.alpha += 1
     else:
-        variant_stats[variant_id]["beta"] += 1
+        chosen_bandit.beta += 1
+    chosen_bandit.n += 1
 
-    # Update the alpha and beta values in the Variants table
-    session.execute(
-        text("""
-            UPDATE public.Variants
-            SET alpha = :alpha, beta = :beta
-            WHERE VariantId = :variant_id
-        """),
-        {"alpha": variant_stats[variant_id]["alpha"], 
-         "beta": variant_stats[variant_id]["beta"], 
-         "variant_id": variant_id}
-    )
-    session.commit()
+    return {"message": "Feedback applied successfully"}
