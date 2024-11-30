@@ -2,11 +2,11 @@ from datetime import datetime
 from loguru import logger
 
 # from ds_service.Thompson_sampling import apply_reward,select_bandit
-from Models.Request.RequestsClasses import CreateProjectRequestModel, CreateBanditRequestModel
+from Models.Request.RequestsClasses import CreateProjectRequestModel, CreateBanditRequestModel, \
+    SubmitBanditChoiseResponseModel
 from Models.Response.ResponseClasses import CreateBanditResponseModel, CreateProjectResponseModel, ProjectReport, \
-    UserEventResponse
+    UserEventResponse, Projects, UserEventResponses
 from Database.models import Project, Bandit, Event, UserEvent
-from Database.schema import User, UserCreate
 from Database.database import get_db
 
 from sqlalchemy.orm import Session
@@ -97,24 +97,23 @@ async def get_champion_bandit(project_id: int, db: Session = Depends(get_db)):
 
     return "TODO"
 
-@app.post("/bandit/{bandit_name}")
-async def get_champion_bandit(bandit_name: str, db: Session = Depends(get_db)):
+@app.post("/user/bandit")
+async def user_choose_bandit(bandit: SubmitBanditChoiseResponseModel, db: Session = Depends(get_db)):
     """
-    Placeholder endpoint to get champion bandit by name.
+     endpoint to record did the user chose bandit positively.
 
     Args:
         bandit_name (str): The name of the bandit.
         db (Session): The database session dependency.
 
-    Returns:
-        str: Placeholder response.
+
     """
     # bandits = db.query(Bandit).filter(project_id == Bandit.project_id).list()
     # champion = select_bandit(bandits)
 
-    return "nono"
+    return
 
-@app.get("projects", response_model=List[Project])
+@app.get("projects", response_model=Projects)
 async def get_project():
     """
     Retrieve all projects.
@@ -137,12 +136,12 @@ async def get_project_report():
     """
     return ProjectReport()
 
-@app.get("user/event", response_model=List[UserEventResponse])
+@app.get("user/event", response_model=UserEventResponses)
 async def get_user_event_report():
     """
     Retrieve a report of user events.
 
     Returns:
-        List[UserEventResponse]: A list of user event responses.
+        A list of user event responses.
     """
     return None

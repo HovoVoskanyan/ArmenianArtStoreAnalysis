@@ -91,3 +91,41 @@ class UserEventResponse(BaseModel):
     bandit_name: str
     positive_qt: int
     negative_qt: int
+
+class UserEventResponses(BaseModel):
+    """
+    Response model for a user event.
+
+    Attributes:
+        bandit_name (str): The name of the bandit associated with the event.
+        positive_qt (int): Quantity of positive events.
+        negative_qt (int): Quantity of negative events.
+    """
+    data: List[UserEventResponse]
+
+
+class Project(BaseModel):
+    """
+    Represents a project in the system.
+
+    Attributes:
+        project_id (int): The unique identifier for the project.
+        project_description (str): A description of the project (maximum 255 characters).
+        bandits_qty (int): The quantity of bandits associated with the project.
+        start_date (DateTime): The start date of the project.
+    """
+    project_id :int
+    project_description:str
+    bandits_qty : int
+    start_date: datetime
+
+class Projects(BaseModel):
+    """
+    Represents a list of project responses in the system.
+
+    Attributes:
+        data (List): Represents the List of projects
+    """
+    data:List[Project]
+
+

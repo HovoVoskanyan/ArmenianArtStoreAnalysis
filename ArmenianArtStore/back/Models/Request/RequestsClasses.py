@@ -39,5 +39,16 @@ class CreateProjectRequestModel(BaseModel):
         arbitrary_types_allowed = True
 
 
+class SubmitBanditChoiseResponseModel(BaseModel):
+    """
+    Represents the response model for submitting a bandit choice.
+
+    Attributes:
+        bandit_name (str): The name of the bandit.
+        chosen (bool): Indicates whether the bandit was chosen.
+    """
+    bandit_name:str
+    chosen:bool
+
 
 
