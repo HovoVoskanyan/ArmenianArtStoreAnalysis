@@ -1,11 +1,13 @@
 from datetime import datetime
+
+import numpy as np
 from loguru import logger
 
 # from ds_service.Thompson_sampling import apply_reward,select_bandit
 from Models.Request.RequestsClasses import CreateProjectRequestModel, CreateBanditRequestModel, \
     SubmitBanditChoiseResponseModel
 from Models.Response.ResponseClasses import CreateBanditResponseModel, CreateProjectResponseModel, ProjectReport, \
-    UserEventResponse, Projects, UserEventResponses
+    UserEventResponse, Projects, UserEventResponses, BanditReport, ProjectItem
 from Database.models import Project, Bandit, Event, UserEvent
 from Database.database import get_db
 
@@ -24,6 +26,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.post("/project", response_model=CreateProjectResponseModel)
 async def create_project(project: CreateProjectRequestModel, db: Session = Depends(get_db)):
@@ -55,13 +58,25 @@ async def create_project(project: CreateProjectRequestModel, db: Session = Depen
         bandits=[]
     )
 
+    event1 = Event(
+        EventName=1
+    )
+
+    event2 = Event(
+        EventName=2
+    )
+
+    db.add(event1)
+    db.add(event2)
+    db.commit()
+
     for bandit in project.bandits:
         new_bandit = Bandit(
             project_id=new_project.project_id,
             name=bandit.name,
-            alpha=0,
-            beta=0,
-            n=new_project.bandits_qty,
+            alpha=1,
+            beta=1,
+            n=0,
             updated_date=datetime.utcnow()
         )
         logger.info(f'Adding bandit {bandit.name} for project {new_project.project_id}')
@@ -81,6 +96,7 @@ async def create_project(project: CreateProjectRequestModel, db: Session = Depen
 
     return response
 
+
 @app.get("/bandit/{project_id}", response_model=str)
 async def get_champion_bandit(project_id: int, db: Session = Depends(get_db)):
     """
@@ -95,7 +111,13 @@ async def get_champion_bandit(project_id: int, db: Session = Depends(get_db)):
     """
     bandits = db.query(Bandit).filter(project_id == Bandit.project_id)
 
-    return "TODO"
+    samples = [np.random.beta(bandit.alpha, bandit.beta) for bandit in bandits]
+
+    # Select the bandit with the highest sample
+    chosen_bandit = bandits[np.argmax(samples)]
+
+    return chosen_bandit.name
+
 
 @app.post("/user/bandit")
 async def user_choose_bandit(bandit: SubmitBanditChoiseResponseModel, db: Session = Depends(get_db)):
@@ -105,26 +127,66 @@ async def user_choose_bandit(bandit: SubmitBanditChoiseResponseModel, db: Sessio
     Args:
         bandit_name (str): The name of the bandit.
         db (Session): The database session dependency.
-
-
     """
-    # bandits = db.query(Bandit).filter(project_id == Bandit.project_id).list()
-    # champion = select_bandit(bandits)
 
-    return
+    bandit_db = db.query(Bandit).filter(Bandit.name == bandit.bandit_name).first()
 
-@app.get("projects", response_model=Projects)
-async def get_project():
+    if not bandit_db:
+        raise HTTPException(status_code=404, detail="Employee not found")
+
+    if(bandit.chosen):
+        liked_event = db.query(Event).filter(Event.EventName == 1).first()
+        bandit_db.alpha += 1
+        new_event = UserEvent(
+            project_id=bandit_db.project_id,
+            bandit_id=bandit_db.id,
+            event_id=liked_event.EventId,
+        )
+        db.add(new_event)
+    else:
+        bandit_db.beta += 1
+        disliked_event = db.query(Event).filter(Event.EventName == 2).first()
+        new_event = UserEvent(
+            project_id=bandit_db.project_id,
+            bandit_id=bandit_db.id,
+            event_id=disliked_event.EventId,
+        )
+        db.add(new_event)
+
+
+    bandit_db.n +=1
+
+    db.commit()
+
+    return {"msg": "Ok"}
+
+
+@app.get("/projects", response_model=Projects)
+async def get_project(db: Session = Depends(get_db)):
     """
     Retrieve all projects.
 
     Returns:
         List[Project]: A list of all projects.
     """
-    return ProjectReport()
 
-@app.get("project/report/{project_id}", response_model=ProjectReport)
-async def get_project_report():
+    projects = db.query(Project).all()
+
+    res_project = []
+
+    for project in projects:
+        res_project.append(ProjectItem(
+            project_id=project.project_id,
+            project_description = project.project_description,
+            bandits_qty = project.bandits_qty,
+            start_date = project.start_date
+        ))
+
+    return Projects(data=res_project)
+
+
+@app.get("/project/report/{project_id}", response_model=ProjectReport)
+async def get_project_report(project_id:int,db: Session = Depends(get_db)):
     """
     Retrieve a detailed report for a specific project.
 
@@ -134,14 +196,21 @@ async def get_project_report():
     Returns:
         ProjectReport: A detailed project report.
     """
-    return ProjectReport()
+    bandits = db.query(Bandit).filter(project_id == Bandit.project_id)
 
-@app.get("user/event", response_model=UserEventResponses)
-async def get_user_event_report():
-    """
-    Retrieve a report of user events.
+    pr_report = ProjectReport(
+        project_id = project_id,
+        bandits_report = []
+    )
 
-    Returns:
-        A list of user event responses.
-    """
-    return None
+    for bandit in bandits:
+        bandit_rep = BanditReport(
+            bandit_id= bandit.id,
+            bandit_name = bandit.name,
+            bandit_opened_qt = bandit.n,
+            alpha = bandit.alpha,
+            beta = bandit.beta
+        )
+        pr_report.bandits_report.append(bandit_rep)
+
+    return pr_report

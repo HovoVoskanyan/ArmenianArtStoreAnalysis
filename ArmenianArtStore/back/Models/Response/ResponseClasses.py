@@ -104,7 +104,7 @@ class UserEventResponses(BaseModel):
     data: List[UserEventResponse]
 
 
-class Project(BaseModel):
+class ProjectItem(BaseModel):
     """
     Represents a project in the system.
 
@@ -126,6 +126,6 @@ class Projects(BaseModel):
     Attributes:
         data (List): Represents the List of projects
     """
-    data:List[Project]
+    data:List[ProjectItem]
 
 
