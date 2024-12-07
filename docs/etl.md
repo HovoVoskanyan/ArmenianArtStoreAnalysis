@@ -1,2 +1,2 @@
 
-::: ArmenianArtStore.etl.models
+::: armenianartstore.etl.models
