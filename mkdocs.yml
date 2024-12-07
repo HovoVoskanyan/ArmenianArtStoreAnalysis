@@ -7,6 +7,10 @@ nav:
   - BACK: back.md
   - DS: ds.md
 
+
+site_name: My Docs
+
+
 theme:
   name: material
   features:
@@ -40,7 +44,7 @@ plugins:
         python:
           setup_commands:
             - import sys
-            - sys.path.append("src")
-          
+            - sys.path.append(".")
+
           rendering:
             show_source: true
