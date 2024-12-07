@@ -17,7 +17,7 @@ class Event(Base):
     """
     __tablename__ = "Events"
     EventId = Column(Integer, primary_key=True, autoincrement=True)
-    EventName = Column(Integer)
+    EventName = Column(String(255))
 
 
 class Project(Base):
