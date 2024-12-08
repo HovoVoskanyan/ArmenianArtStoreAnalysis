@@ -3,9 +3,9 @@ site_name: My Docs
 nav:
   - Home: index.md
   - ETL: etl.md
-  # - FRONT: front.md
-  # - BACK: back.md
-  # - DS: ds.md
+  - FRONT: front.md
+  - BACK: back.md
+  - DS: ds.md
 
 theme:
   name: material
