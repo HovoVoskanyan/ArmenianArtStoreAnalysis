@@ -7,10 +7,6 @@ nav:
   - BACK: back.md
   - DS: ds.md
 
-
-site_name: My Docs
-
-
 theme:
   name: material
   features:
