@@ -30,6 +30,7 @@ services:
       - ./pgadmin_data:/var/lib/pgadmin  # Persisting pgAdmin configuration and sessions
     depends_on:
       - db
+    user: "0:0"  # Run as root
 
   etl:
      container_name: etl
@@ -54,7 +55,7 @@ services:
       volumes:
           - ./back:/back
       ports:
-          - 8008:8000
+          - 8000:8000
       environment:
           - DATABASE_URL=${DATABASE_URL}
       depends_on:

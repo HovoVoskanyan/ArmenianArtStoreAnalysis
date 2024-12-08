@@ -11,40 +11,25 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 50px;
     font-weight: 400;
-    color: white;
+    color: black;
     line-height: 1.2;
-    margin-top: none;
-}
-
-/* Basket and Catalog styling */
-.right-menu {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; 
-    font-size: 20px;
-    font-weight: 400;
-    gap: 40px;
-    color: white;
-    margin-top: 20px; 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
+    margin-top: 115px;
 }
 
 /* Search box styling */
 .search-box {
     display: flex;
-    justify-content: flex-start;
-    margin-top: 110px;
+    justify-content: flex-end;
+    margin-top: 100px;
 }
 .search-box input {
     border-radius: 30px;
-    border: 1px solid white;
+    border: 1px solid black;
     padding: 10px 20px;
     width: 300px;
     font-family: 'Montserrat', sans-serif;
-    color: black; 
-    background-color: white; 
+    color: #333; 
+    background-color: transparent;
 }
 
 /* Section styling */
@@ -70,11 +55,11 @@ body {
 .item-title {
     font-size: 18px;
     font-weight: 600;
-    color: #1a3f57;
+    color: #333;
 }
 .item-price {
     font-size: 16px;
-    color: orange;
+    color: #c00;
 }
 .button-row {
     display: flex;
@@ -98,7 +83,7 @@ body {
     font-size: 14px;
     color: #666;
     border-radius: 8px;
-    margin-top: 80px;
+    margin-top: 50px;
 }
 .footer .section {
     width: 22%;
@@ -113,8 +98,8 @@ body {
     width: 100%;
     padding: 10px;
     border-radius: 20px;
-    border: none;
-    background-color: #333;
+    border: 1px solid #ccc;
+    background-color: white;
     margin-bottom: 10px;
 }
 .footer .subscribe-box button {

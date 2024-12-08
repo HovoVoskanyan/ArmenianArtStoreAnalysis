@@ -166,3 +166,4 @@ venv/
 
 pgadmin_data
 postgres_data
+/myenv/
