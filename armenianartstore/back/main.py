@@ -59,11 +59,11 @@ async def create_project(project: CreateProjectRequestModel, db: Session = Depen
     )
 
     event1 = Event(
-        EventName=1
+        EventName="Like"
     )
 
     event2 = Event(
-        EventName=2
+        EventName="Dislike"
     )
 
     db.add(event1)
@@ -135,7 +135,7 @@ async def user_choose_bandit(bandit: SubmitBanditChoiseResponseModel, db: Sessio
         raise HTTPException(status_code=404, detail="Employee not found")
 
     if(bandit.chosen):
-        liked_event = db.query(Event).filter(Event.EventName == 1).first()
+        liked_event = db.query(Event).filter(Event.EventName == "Dislike").first()
         bandit_db.alpha += 1
         new_event = UserEvent(
             project_id=bandit_db.project_id,
@@ -145,7 +145,7 @@ async def user_choose_bandit(bandit: SubmitBanditChoiseResponseModel, db: Sessio
         db.add(new_event)
     else:
         bandit_db.beta += 1
-        disliked_event = db.query(Event).filter(Event.EventName == 2).first()
+        disliked_event = db.query(Event).filter(Event.EventName == "Like").first()
         new_event = UserEvent(
             project_id=bandit_db.project_id,
             bandit_id=bandit_db.id,
