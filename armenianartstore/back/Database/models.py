@@ -17,7 +17,7 @@ class Event(Base):
     """
     __tablename__ = "Events"
     EventId = Column(Integer, primary_key=True, autoincrement=True)
-    EventName = Column(Integer)
+    EventName = Column(String(255))
 
 
 class Project(Base):
@@ -29,7 +29,7 @@ class Project(Base):
         project_id (int): The unique identifier for the project.
         project_description (str): A description of the project (maximum 255 characters).
         bandits_qty (int): The quantity of bandits associated with the project.
-        start_date (DateTime): The start date of the project.
+        start_date (DateTime): The start date of the project.l
     """
     __tablename__ = "Projects"
     project_id = Column(Integer, primary_key=True, autoincrement=True)
