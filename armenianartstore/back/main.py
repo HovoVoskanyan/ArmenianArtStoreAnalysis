@@ -43,8 +43,10 @@ async def create_project(project: CreateProjectRequestModel, db: Session = Depen
     new_project = Project(
         project_description=project.project_description,
         start_date=datetime.utcnow(),
-        bandits_qty=len(project.bandits)
+        bandits_qty=project.bandits.qt
     )
+
+    project.bandits.name = project.bandits.name.lower()
 
     db.add(new_project)
     db.commit()
@@ -70,16 +72,16 @@ async def create_project(project: CreateProjectRequestModel, db: Session = Depen
     db.add(event2)
     db.commit()
 
-    for bandit in project.bandits:
+    for i in range(1,project.bandits.qt+1):
         new_bandit = Bandit(
             project_id=new_project.project_id,
-            name=bandit.name,
+            name=f"{project.bandits.name}{i}",
             alpha=1,
             beta=1,
             n=0,
             updated_date=datetime.utcnow()
         )
-        logger.info(f'Adding bandit {bandit.name} for project {new_project.project_id}')
+        logger.info(f'Adding bandit {new_bandit.name} for project {new_project.project_id}')
         db.add(new_bandit)
         db.commit()
         db.refresh(new_bandit)

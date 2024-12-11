@@ -14,6 +14,7 @@ class CreateBanditRequestModel(BaseModel):
         arbitrary_types_allowed (bool): Enables support for arbitrary types within the model.
     """
     name: str
+    qt:int
 
     class Config:
         from_attributes = True
@@ -32,7 +33,7 @@ class CreateProjectRequestModel(BaseModel):
         arbitrary_types_allowed (bool): Enables support for arbitrary types within the model.
     """
     project_description: str
-    bandits: List[CreateBanditRequestModel]
+    bandits: CreateBanditRequestModel
 
     class Config:
         from_attributes = True
