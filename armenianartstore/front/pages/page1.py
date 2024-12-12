@@ -34,9 +34,11 @@ Example Use Case:
 """
 
 import streamlit as st
-from styles.style import *  # Import utility functions for generating HTML and CSS
+from styles.style import *  # Import functions for generating HTML and CSS
 import base64
 import os
+from os.path import splitext, basename
+from utils import create_user_choice, get_report
 
 # Set page configuration
 st.set_page_config(page_title="Armenian Art Gallery and Store", layout="wide")
@@ -54,6 +56,30 @@ CATALOG_DIR = os.path.join(IMAGES_DIR, "art_catalog")
 FOOTER_DIR = os.path.join(IMAGES_DIR, "footer")
 BACKGROUND_DIR = os.path.join(IMAGES_DIR, "background")
 STYLES_DIR = os.path.join(PROJECT_DIR, "styles")
+
+# Get the script name
+SCRIPT_NAME = os.path.splitext(os.path.basename(__file__))[0]
+
+# Desired project ID
+PROJECT_ID = 64
+
+# Generate dynamic mapping of bandit names to `page1`
+def get_bandit_mappings(project_id):
+    """
+    Map all bandit names dynamically to `page1.py` for this script.
+    """
+    report = get_report(project_id)
+    bandit_mappings = {}
+    for i, row in enumerate(report.to_dict(orient="records"), start=1):
+        base_name = row["bandit_name"][:-1]  # Remove the trailing number to get the base name
+        bandit_mappings[f"{base_name}{i}"] = SCRIPT_NAME  # Map to `page3`
+    return bandit_mappings
+
+# Generate the bandit mappings for the current project
+bandit_mappings = get_bandit_mappings(PROJECT_ID)
+# Debugging: Print the bandit mappings
+print(f"Bandit Mappings: {bandit_mappings}")
+
 
 # Set the background image
 background_file = os.path.join(BACKGROUND_DIR, "background1.png")
@@ -98,9 +124,9 @@ def main():
             with button_col:
                 # Buttons for navigation
                 if st.button("Go to Catalog", key="button1"):
-                    st.write("clicked!")
+                    create_user_choice(bandit_name=SCRIPT_NAME, chosen=True)
                 if st.button("Not Interested", key="button2"):
-                    st.write("clicked!")
+                    create_user_choice(bandit_name=SCRIPT_NAME, chosen=False)
             
             # Display the search box
             st.markdown(get_search_box_html(), unsafe_allow_html=True)

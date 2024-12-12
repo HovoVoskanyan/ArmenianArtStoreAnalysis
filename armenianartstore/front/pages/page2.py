@@ -34,9 +34,11 @@ Example Use Case:
 """
 
 import streamlit as st
-from styles.style import *  # Import utility functions for generating HTML and CSS
+from styles.style import *  # Import functions for generating HTML and CSS
 import base64
 import os
+from os.path import splitext, basename
+from utils import create_user_choice
 
 # Set page configuration
 st.set_page_config(page_title="Armenian Art Gallery and Store", layout="wide")
@@ -54,6 +56,9 @@ CATALOG_DIR = os.path.join(IMAGES_DIR, "art_catalog")
 FOOTER_DIR = os.path.join(IMAGES_DIR, "footer")
 BACKGROUND_DIR = os.path.join(IMAGES_DIR, "background")
 STYLES_DIR = os.path.join(PROJECT_DIR, "styles")
+
+# Get the script name
+SCRIPT_NAME = os.path.splitext(os.path.basename(__file__))[0]
 
 # Set the background image
 background_file = os.path.join(BACKGROUND_DIR, "background2.png")
@@ -98,9 +103,9 @@ def main():
             with button_col:
                 # Buttons for navigation
                 if st.button("Go to Catalog", key="button1"):
-                    st.write("clicked!")
+                    create_user_choice(bandit_name=SCRIPT_NAME, chosen=True)
                 if st.button("Not Interested", key="button2"):
-                    st.write("clicked!")
+                    create_user_choice(bandit_name=SCRIPT_NAME, chosen=False)
             
             # Display the search box
             st.markdown(get_search_box_html(), unsafe_allow_html=True)
