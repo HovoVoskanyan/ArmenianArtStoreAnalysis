@@ -50,6 +50,7 @@ class SubmitBanditChoiseResponseModel(BaseModel):
     """
     bandit_name:str
     chosen:bool
+    project_id:int
 
 
 

@@ -121,7 +121,7 @@ async def get_champion_bandit(project_id: int, db: Session = Depends(get_db)):
     return chosen_bandit.name
 
 
-@app.post("/user/bandit")
+@app.put("/user/bandit")
 async def user_choose_bandit(bandit: SubmitBanditChoiseResponseModel, db: Session = Depends(get_db)):
     """
      endpoint to record did the user chose bandit positively.
@@ -131,7 +131,7 @@ async def user_choose_bandit(bandit: SubmitBanditChoiseResponseModel, db: Sessio
         db (Session): The database session dependency.
     """
 
-    bandit_db = db.query(Bandit).filter(Bandit.name == bandit.bandit_name).first()
+    bandit_db = db.query(Bandit).filter(Bandit.name == bandit.bandit_name and Bandit.project_id == bandit.project_id).first()
 
     if not bandit_db:
         raise HTTPException(status_code=404, detail="Employee not found")
