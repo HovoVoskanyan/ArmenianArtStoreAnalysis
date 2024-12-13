@@ -1,12 +1,10 @@
 import os
 import streamlit as st
+from config import PROJECT_ID
 from utils import get_champion, get_report
 
 # Streamlit Page Configuration
 st.set_page_config(page_title="Dynamic Page Loader", layout="wide")
-
-# Desired project ID
-PROJECT_ID = 1
 
 # List existing page files dynamically
 def list_existing_pages(pages_dir="pages"):

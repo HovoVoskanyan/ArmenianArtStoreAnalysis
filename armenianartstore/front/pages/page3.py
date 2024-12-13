@@ -5,6 +5,7 @@ import os
 import logging
 from os.path import splitext, basename
 from utils import create_user_choose_bandit, get_report
+from config import PROJECT_ID
 
 # Set page configuration
 st.set_page_config(page_title="Armenian Art Gallery and Store", layout="wide")
@@ -27,7 +28,7 @@ STYLES_DIR = os.path.join(PROJECT_DIR, "styles")
 SCRIPT_NAME = os.path.splitext(os.path.basename(__file__))[0]
 
 # Desired project ID
-PROJECT_ID = 1
+#PROJECT_ID = 1
 
 # Generate dynamic mapping for only one bandit for this page
 def map_bandit_for_page(project_id, script_name):
@@ -59,11 +60,8 @@ def apply_css():
     - FileNotFoundError: If the CSS file does not exist at the specified path.
     """
     css_path = os.path.join(STYLES_DIR, "style1.css")
-    try:
-        with open(css_path, "r") as f:
-            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-    except FileNotFoundError:
-        print(f"CSS file not found: {css_path}")
+    with open(css_path, "r") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # Main function to render the app
 def main():

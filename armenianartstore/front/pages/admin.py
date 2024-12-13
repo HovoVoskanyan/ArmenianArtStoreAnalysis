@@ -6,36 +6,22 @@ from utils import get_projects, get_report, create_project  # Import the functio
  
 # Function to fetch bandit data from the backend
 def fetch_real_bandits(project_id):
-    try:
         # Fetch the report from the backend
         df_bandits = get_report(project_id=project_id)
 
         # Create a list of dictionaries for bandits from the DataFrame
         bandits = [
-            {"bandit_id": row['bandit_id'], "alpha": row['alpha'], "beta": row['beta']}
+            {"bandit_name": row['bandit_name'], "alpha": row['alpha'], "beta": row['beta']}
             for _, row in df_bandits.iterrows()
         ]
         return bandits
-    except Exception as e:
-        st.error(f"Failed to fetch bandit data: {e}")
-        return []
 
 # Function to fetch available project IDs
 def fetch_project_ids():
-    """
-    Fetches all project IDs and descriptions from the backend.
-
-    Returns:
-    - List of tuples containing project ID and description.
-    """
-    try:
-        df_projects = get_projects()
-        # Extract project IDs and descriptions
-        project_options = [(row['project_id'], row['project_description']) for _, row in df_projects.iterrows()]
-        return project_options
-    except Exception as e:
-        st.error(f"Failed to fetch projects: {e}")
-        return []
+    df_projects = get_projects()
+    # Extract project IDs and descriptions
+    project_options = [(row['project_id'], row['project_description']) for _, row in df_projects.iterrows()]
+    return project_options
 
 # Function to generate the beta distribution plot using Plotly
 def generate_bandit_plot(bandits):
@@ -58,7 +44,7 @@ def generate_bandit_plot(bandits):
     for bandit in bandits:
         alpha = bandit['alpha']  # Get alpha value for the bandit
         beta = bandit['beta']    # Get beta value for the bandit
-        bandit_id = bandit['bandit_id']  # Get bandit ID
+        bandit_name = bandit['bandit_name']  # Get bandit ID
         n = alpha + beta - 2
 
         # Special case for alpha = beta = 1 (uniform distribution)
@@ -74,7 +60,7 @@ def generate_bandit_plot(bandits):
                 x=x,
                 y=y,
                 mode="lines",
-                name=f"Page {bandit_id} (α={alpha}, β={beta}, n={n})",
+                name=f"{bandit_name} (α={alpha}, β={beta}, n={n})",
                 hoverinfo="x+y+name"
             )
         )
