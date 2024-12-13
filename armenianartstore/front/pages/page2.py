@@ -27,7 +27,7 @@ STYLES_DIR = os.path.join(PROJECT_DIR, "styles")
 SCRIPT_NAME = os.path.splitext(os.path.basename(__file__))[0]
 
 # Desired project ID
-PROJECT_ID = 75
+PROJECT_ID = 1
 
 # Generate dynamic mapping for only one bandit for this page
 def map_bandit_for_page(project_id, script_name):

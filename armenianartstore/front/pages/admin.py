@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
-from scipy.stats import beta
+from scipy.stats import beta as beta_dist
 from utils import get_projects, get_report, create_project, set_project_id  # Import the functions to fetch data
  
 # Function to fetch bandit data from the backend
@@ -94,7 +94,7 @@ def main():
     # Streamlit title for the section
     st.title("Beta Distributions of Bandits")
     
-    st.title("Project Selection")
+    #st.title("Project Selection")
 
     # Fetch project options dynamically
     project_options = fetch_project_ids()
@@ -122,3 +122,4 @@ def main():
 # Run the application
 if __name__ == "__main__":
     main()
+    

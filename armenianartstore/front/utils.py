@@ -32,12 +32,13 @@ def get_champion(project_id:int):
     response = requests.get(url)
     if response.status_code == 200:
         data = response.json()
-        return data
+        df = pd.DataFrame([data])
+        return df['name'].tolist()
     else:
         raise ValueError(f"Project with ID {project_id} not found: {response.status_code}")
 
-# champion = get_champion(project_id = 75)
-# print(champion)
+champion = get_champion(project_id = 1)
+print(champion)
 
 def create_user_choose_bandit(bandit_name: str, chosen: bool, project_id:int) -> dict:
     payload = {
@@ -55,7 +56,7 @@ def create_user_choose_bandit(bandit_name: str, chosen: bool, project_id:int) ->
     else:
         raise ValueError(f"Failed to submit user choice. Status code: {response.status_code}")
 
-# choice = create_user_choice("page1", True, 75)
+# choice = create_user_choose_bandit("page1", True, 1)
 # print(choice)
 
 def get_projects():
@@ -66,8 +67,8 @@ def get_projects():
         df = pd.DataFrame(data['data'])
         return df
 
-df_projects = get_projects()
-print(df_projects)
+# df_projects = get_projects()
+# print(df_projects)
 
 def get_report(project_id:int):
     url = f"{api_url}/project/report/{project_id}"
@@ -77,66 +78,5 @@ def get_report(project_id:int):
         df = pd.DataFrame(data['bandits_report'])
         return df
 
-df_report = get_report(project_id = 75)
-print(df_report)
-
-
-
-# Function to fetch bandit data from the backend
-def fetch_real_bandits(project_id):
-    try:
-        # Fetch the report from the backend
-        df_bandits = get_report(project_id=project_id)
-
-        # Create a list of dictionaries for bandits from the DataFrame
-        bandits = [
-            {"bandit_id": row['bandit_id'], "alpha": row['alpha'], "beta": row['beta']}
-            for _, row in df_bandits.iterrows()
-        ]
-        return bandits
-    except Exception as e:
-        st.error(f"Failed to fetch bandit data: {e}")
-        return []
-
-
-# # Example usage of the function
-# PROJECT_ID = 75
-
-# # Fetch bandits
-# bandits = fetch_real_bandits(PROJECT_ID)
-
-# # Print the fetched bandits
-# if bandits:
-#     print("Fetched Bandit Data:")
-#     for bandit in bandits:
-#         print(bandit)
-# else:
-#     print("No bandit data found.")
-
-
-# # Function to fetch available project IDs
-# def fetch_project_ids():
-#     """
-#     Fetches all project IDs and descriptions from the backend.
-
-#     Returns:
-#     - List of tuples containing project ID and description.
-#     """
-#     try:
-#         df_projects = get_projects()
-#         # Extract project IDs and descriptions
-#         project_options = [(row['project_id'], row['project_description']) for _, row in df_projects.iterrows()]
-#         return project_options
-#     except Exception as e:
-#         st.error(f"Failed to fetch projects: {e}")
-#         return []
-
-# projects =fetch_project_ids()
-
-# # Print the fetched bandits
-# if projects:
-#     print("Fetched Bandit Data:")
-#     for project in projects:
-#         print(project)
-# else:
-#     print("No bandit data found.")
+# df_report = get_report(project_id = 1)
+# print(df_report)

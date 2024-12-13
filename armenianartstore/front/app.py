@@ -6,14 +6,14 @@ from utils import get_champion, get_report
 st.set_page_config(page_title="Dynamic Page Loader", layout="wide")
 
 # Desired project ID
-PROJECT_ID = 75
+PROJECT_ID = 1
 
 # List existing page files dynamically
 def list_existing_pages(pages_dir="pages"):
     return sorted([file for file in os.listdir(pages_dir) if file.startswith("page") and file.endswith(".py")])
 
 # Fetch the champion bandit (using its ID)
-champion_bandit = get_champion(PROJECT_ID) 
+champion_bandit = get_champion(PROJECT_ID)
 
 # List actual pages in the `pages/` directory
 existing_pages = list_existing_pages()
@@ -43,9 +43,10 @@ def map_bandits_to_pages(project_id, existing_pages):
 
 # Generate the pages mapping using bandit_name
 pages = map_bandits_to_pages(PROJECT_ID, existing_pages)
-
+print(pages)
 # Get the corresponding page for the champion bandit
-page = pages.get(champion_bandit)
+page = pages.get(champion_bandit[0])
+print(page)
 
 def generate_sidebar_links(tabs: list, label: str = "page"):
     
