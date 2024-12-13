@@ -24,8 +24,8 @@ def create_project(project_description: str, bandit_name: str, bandit_qt: int) -
         raise ValueError(f"Failed to create project. Status code: {response.status_code}")
 
 # Example usage
-# df_create_new_project = create_project("Astx", "page", 3)
-# print(df_create_new_project)
+df_create_new_project = create_project("Test Project", "page", 3)
+print(df_create_new_project)
 
 def get_champion(project_id:int):
     url = f"{api_url}/bandit/{project_id}"
