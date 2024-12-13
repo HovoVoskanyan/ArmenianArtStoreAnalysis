@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 from scipy.stats import beta as beta_dist
-from utils import get_projects, get_report, create_project, set_project_id  # Import the functions to fetch data
+from utils import get_projects, get_report, create_project  # Import the functions to fetch data
  
 # Function to fetch bandit data from the backend
 def fetch_real_bandits(project_id):
@@ -122,4 +122,3 @@ def main():
 # Run the application
 if __name__ == "__main__":
     main()
-    
