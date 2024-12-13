@@ -27,7 +27,7 @@ STYLES_DIR = os.path.join(PROJECT_DIR, "styles")
 SCRIPT_NAME = os.path.splitext(os.path.basename(__file__))[0]
 
 # Desired project ID
-PROJECT_ID = 75
+PROJECT_ID = 81
 
 # Generate dynamic mapping for only one bandit for this page
 def map_bandit_for_page(project_id, script_name):
@@ -40,7 +40,7 @@ def map_bandit_for_page(project_id, script_name):
             return {row["bandit_id"]: script_name}
 
     # If no match is found after checking all rows, raise an error
-    raise ValueError(f"Please enter bandit name as: {SCRIPT_NAME}")
+    raise ValueError(f"Please enter bandit name as: {SCRIPT_NAME.rstrip('0123456789')}") 
 
 # Generate the mapping for this page
 bandit_mapping = map_bandit_for_page(PROJECT_ID, SCRIPT_NAME)
