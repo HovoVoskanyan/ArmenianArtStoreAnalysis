@@ -7,7 +7,7 @@ from loguru import logger
 from Models.Request.RequestsClasses import CreateProjectRequestModel, CreateBanditRequestModel, \
     SubmitBanditChoiseResponseModel
 from Models.Response.ResponseClasses import CreateBanditResponseModel, CreateProjectResponseModel, ProjectReport, \
-    UserEventResponse, Projects, UserEventResponses, BanditReport, ProjectItem
+    UserEventResponse, Projects, UserEventResponses, BanditReport, ProjectItem, ChampionBanditResponseModel
 from Database.models import Project, Bandit, Event, UserEvent
 from Database.database import get_db
 
@@ -42,7 +42,6 @@ async def create_project(project: CreateProjectRequestModel, db: Session = Depen
     """
     new_project = Project(
         project_description=project.project_description,
-        start_date=datetime.utcnow(),
         bandits_qty=project.bandits.qt
     )
 
@@ -55,21 +54,26 @@ async def create_project(project: CreateProjectRequestModel, db: Session = Depen
     response = CreateProjectResponseModel(
         project_id=new_project.project_id,
         project_description=new_project.project_description,
-        start_date=new_project.start_date,
         bandits_qty=new_project.bandits_qty,
-        bandits=[]
+        bandits=[],
+        start_date=new_project.created_date
     )
 
-    event1 = Event(
-        EventName="Like"
-    )
+    liked_event = db.query(Event).filter(Event.EventName == "Like").first()
+    if liked_event is None:
+        event1 = Event(
+            EventName="Like"
+        )
+        db.add(event1)
 
-    event2 = Event(
-        EventName="Dislike"
-    )
+    disliked_event = db.query(Event).filter(Event.EventName == "Like").first()
 
-    db.add(event1)
-    db.add(event2)
+    if disliked_event is None:
+        event2 = Event(
+            EventName="Dislike"
+        )
+        db.add(event2)
+
     db.commit()
 
     for i in range(1,project.bandits.qt+1):
@@ -99,7 +103,7 @@ async def create_project(project: CreateProjectRequestModel, db: Session = Depen
     return response
 
 
-@app.get("/bandit/{project_id}", response_model=str)
+@app.get("/bandit/{project_id}", response_model=ChampionBanditResponseModel)
 async def get_champion_bandit(project_id: int, db: Session = Depends(get_db)):
     """
     Retrieve the champion bandit for a given project.
@@ -118,7 +122,10 @@ async def get_champion_bandit(project_id: int, db: Session = Depends(get_db)):
     # Select the bandit with the highest sample
     chosen_bandit = bandits[np.argmax(samples)]
 
-    return chosen_bandit.name
+    return ChampionBanditResponseModel(
+        name = chosen_bandit.name,
+        id=chosen_bandit.id
+    )
 
 
 @app.put("/user/bandit")
@@ -137,7 +144,7 @@ async def user_choose_bandit(bandit: SubmitBanditChoiseResponseModel, db: Sessio
         raise HTTPException(status_code=404, detail="Employee not found")
 
     if(bandit.chosen):
-        liked_event = db.query(Event).filter(Event.EventName == "Dislike").first()
+        liked_event = db.query(Event).filter(Event.EventName == "Like").first()
         bandit_db.alpha += 1
         new_event = UserEvent(
             project_id=bandit_db.project_id,
@@ -147,7 +154,7 @@ async def user_choose_bandit(bandit: SubmitBanditChoiseResponseModel, db: Sessio
         db.add(new_event)
     else:
         bandit_db.beta += 1
-        disliked_event = db.query(Event).filter(Event.EventName == "Like").first()
+        disliked_event = db.query(Event).filter(Event.EventName == "Dislike").first()
         new_event = UserEvent(
             project_id=bandit_db.project_id,
             bandit_id=bandit_db.id,
@@ -181,7 +188,7 @@ async def get_project(db: Session = Depends(get_db)):
             project_id=project.project_id,
             project_description = project.project_description,
             bandits_qty = project.bandits_qty,
-            start_date = project.start_date
+            start_date = project.created_date
         ))
 
     return Projects(data=res_project)
