@@ -128,4 +128,19 @@ class Projects(BaseModel):
     """
     data:List[ProjectItem]
 
+class ChampionBanditResponseModel(BaseModel):
+    """
+    Response model for a created bandit.
+
+    Attributes:
+        id (int): The ID of the bandit.
+        project_id (int): The ID of the project the bandit belongs to.
+        name (str): The name of the bandit.
+        alpha (int): Alpha parameter for the bandit.
+        beta (int): Beta parameter for the bandit.
+        update_date (datetime): The last updated date of the bandit.
+    """
+    id: int
+    name: str
+
 

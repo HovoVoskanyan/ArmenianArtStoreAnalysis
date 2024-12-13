@@ -3,7 +3,15 @@ from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from datetime import datetime
+from pytz import timezone
 
+
+def get_yerevan_time():
+    """
+    Returns the current time in the Yerevan timezone.
+    """
+    yerevan_tz = timezone('Asia/Yerevan')
+    return datetime.now(yerevan_tz)
 
 Base= declarative_base()
 class Event(Base):
@@ -18,6 +26,7 @@ class Event(Base):
     __tablename__ = "Events"
     EventId = Column(Integer, primary_key=True, autoincrement=True)
     EventName = Column(String(255))
+    created_date = Column(DateTime, default=get_yerevan_time)
 
 
 class Project(Base):
@@ -35,7 +44,7 @@ class Project(Base):
     project_id = Column(Integer, primary_key=True, autoincrement=True)
     project_description = Column(String(255))
     bandits_qty = Column(Integer)
-    start_date = Column(DateTime)
+    created_date = Column(DateTime, default=get_yerevan_time)
 
 
 class Bandit(Base):
@@ -59,8 +68,8 @@ class Bandit(Base):
     alpha = Column(Float)
     beta = Column(Float)
     n = Column(Integer)
-    updated_date = Column(DateTime, default=datetime.utcnow)
-
+    updated_date = Column(DateTime, default=get_yerevan_time)
+    created_date = Column(DateTime, default=get_yerevan_time)
 
 class UserEvent(Base):
     """
@@ -79,5 +88,7 @@ class UserEvent(Base):
     project_id = Column(Integer, ForeignKey("Projects.project_id"))
     bandit_id = Column(Integer, ForeignKey("Bandits.id"))
     event_id = Column(Integer, ForeignKey("Events.EventId"))
-    event_date = Column(DateTime, default=datetime.utcnow)
+    created_date = Column(DateTime, default=get_yerevan_time)
+
+
 
