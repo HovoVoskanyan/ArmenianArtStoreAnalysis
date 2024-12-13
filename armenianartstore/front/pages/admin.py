@@ -175,9 +175,6 @@ def generate_bandit_plot(bandits):
         st.error("No bandits provided!")
         return
 
-    # Streamlit title for the section
-    st.title("Beta Distributions of Bandits")
-
     # Initialize the Plotly figure
     fig = go.Figure()
     
@@ -220,6 +217,9 @@ def generate_bandit_plot(bandits):
 
 # Main application logic
 def main():
+    # Streamlit title for the section
+    st.title("Beta Distributions of Bandits")
+    
     st.title("Project Selection")
 
     # Fetch project options dynamically

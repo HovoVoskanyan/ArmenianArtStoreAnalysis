@@ -6,7 +6,7 @@ from utils import get_champion, get_report
 st.set_page_config(page_title="Dynamic Page Loader", layout="wide")
 
 # Desired project ID
-PROJECT_ID = 81
+PROJECT_ID = 75
 
 # List existing page files dynamically
 def list_existing_pages(pages_dir="pages"):

@@ -4,9 +4,6 @@ import pandas as pd
 
 api_url = os.getenv("API_URL", "http://back:8000")
 
-
-
-
 def create_project(project_description: str, bandit_name: str, bandit_qt: int) -> pd.DataFrame:
     payload = {
         "project_description": project_description,
@@ -102,44 +99,44 @@ def fetch_real_bandits(project_id):
         return []
 
 
-# Example usage of the function
-PROJECT_ID = 75
+# # Example usage of the function
+# PROJECT_ID = 75
 
-# Fetch bandits
-bandits = fetch_real_bandits(PROJECT_ID)
+# # Fetch bandits
+# bandits = fetch_real_bandits(PROJECT_ID)
 
-# Print the fetched bandits
-if bandits:
-    print("Fetched Bandit Data:")
-    for bandit in bandits:
-        print(bandit)
-else:
-    print("No bandit data found.")
+# # Print the fetched bandits
+# if bandits:
+#     print("Fetched Bandit Data:")
+#     for bandit in bandits:
+#         print(bandit)
+# else:
+#     print("No bandit data found.")
 
 
-# Function to fetch available project IDs
-def fetch_project_ids():
-    """
-    Fetches all project IDs and descriptions from the backend.
+# # Function to fetch available project IDs
+# def fetch_project_ids():
+#     """
+#     Fetches all project IDs and descriptions from the backend.
 
-    Returns:
-    - List of tuples containing project ID and description.
-    """
-    try:
-        df_projects = get_projects()
-        # Extract project IDs and descriptions
-        project_options = [(row['project_id'], row['project_description']) for _, row in df_projects.iterrows()]
-        return project_options
-    except Exception as e:
-        st.error(f"Failed to fetch projects: {e}")
-        return []
+#     Returns:
+#     - List of tuples containing project ID and description.
+#     """
+#     try:
+#         df_projects = get_projects()
+#         # Extract project IDs and descriptions
+#         project_options = [(row['project_id'], row['project_description']) for _, row in df_projects.iterrows()]
+#         return project_options
+#     except Exception as e:
+#         st.error(f"Failed to fetch projects: {e}")
+#         return []
 
-projects =fetch_project_ids()
+# projects =fetch_project_ids()
 
-# Print the fetched bandits
-if projects:
-    print("Fetched Bandit Data:")
-    for project in projects:
-        print(project)
-else:
-    print("No bandit data found.")
+# # Print the fetched bandits
+# if projects:
+#     print("Fetched Bandit Data:")
+#     for project in projects:
+#         print(project)
+# else:
+#     print("No bandit data found.")
