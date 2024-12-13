@@ -1,45 +1,10 @@
-"""
-Streamlit Application for Armenian Art Gallery and Store.
-
-This application provides an interactive user interface for showcasing Armenian art,
-including special offers, a catalog of artworks, and a footer with contact details and 
-promotional subscriptions. It uses external CSS for styling and dynamically loads 
-content such as images and layouts.
-
-Modules:
-    - streamlit: For creating the web application interface.
-    - os: For file and directory handling, including resolving relative paths.
-    - base64: For encoding image files to Base64 format for embedding in HTML.
-
-Features:
-    - Header section with a title, navigation buttons, and a search box.
-    - Special Offers section with dynamically loaded images and details.
-    - Catalog section displaying a range of artworks with prices and details.
-    - Footer section with contact information, a subscription box, and social media icons.
-    - Uses external CSS for styling and Base64 encoding for embedding images.
-
-Directory Structure:
-    - styles/
-        - Contains external CSS and helper functions for generating styles (e.g., `style1.css`).
-    - images/
-        - Contains images for special offers, catalog items, and footer icons.
-    - pages/
-        - Contains additional pages for multi-page navigation if integrated.
-    - app.py
-        - Main file to run the application.
-
-Example Use Case:
-    - Displays a visually appealing interface for an art gallery, providing users with a
-      seamless experience to explore and interact with artwork, offers, and promotions.
-"""
-
 import streamlit as st
 from styles.style import *  # Import utility functions for generating HTML and CSS
 import base64
 import os
 import logging
 from os.path import splitext, basename
-from utils import create_user_choice, get_report
+from utils import create_user_choose_bandit, get_report
 
 # Set page configuration
 st.set_page_config(page_title="Armenian Art Gallery and Store", layout="wide")
@@ -62,27 +27,23 @@ STYLES_DIR = os.path.join(PROJECT_DIR, "styles")
 SCRIPT_NAME = os.path.splitext(os.path.basename(__file__))[0]
 
 # Desired project ID
-PROJECT_ID = 64
+PROJECT_ID = 75
 
-# Generate dynamic mapping for only one bandit for this page
 def get_bandit_mapping_for_page(project_id, script_name):
-    """
-    Map the specific bandit to the current script based on its position.
-    This ensures only one bandit is mapped to this page.
-    """
+    
     report = get_report(project_id)
-    for i, row in enumerate(report.to_dict(orient="records"), start=1):
+
+    for row in report.to_dict(orient="records"):
         # Match this script to its corresponding bandit
-        if script_name == SCRIPT_NAME:
-            return {row["bandit_name"]: script_name}
-    return {}
+        if row["bandit_name"] == script_name:
+            return {row["bandit_id"]: script_name}
+
+    # If no match is found after checking all rows, raise an error
+    raise ValueError(f"Please enter bandit name as: {SCRIPT_NAME}")
 
 # Generate the mapping for this page
 bandit_mapping = get_bandit_mapping_for_page(PROJECT_ID, SCRIPT_NAME)
-logging.debug(f"Bandit Mapping for {SCRIPT_NAME}: {bandit_mapping}")
-
-# Debugging: Print the bandit mapping
-print(f"Bandit Mapping for {SCRIPT_NAME}: {bandit_mapping}")
+script_name = list(bandit_mapping.values())[0]
 
 # Set the background image
 background_file = os.path.join(BACKGROUND_DIR, "background1.png")
@@ -126,29 +87,10 @@ def main():
 
             with button_col:
                 # Buttons for navigation
-            #     if st.button("Go to Catalog", key="button1"):
-            #         bandit_name = list(bandit_mapping.keys())[0]
-            #         create_user_choice(bandit_name=bandit_name, chosen=True)
-            #     if st.button("Not Interested", key="button2"):
-            #         bandit_name = list(bandit_mapping.keys())[0]
-            #         create_user_choice(bandit_name=bandit_name, chosen=False)
-            # # Display the search box
-            # st.markdown(get_search_box_html(), unsafe_allow_html=True)
-
                 if st.button("Go to Catalog", key="button1"):
-                    try:
-                        bandit_name = list(bandit_mapping.keys())[0]
-                        logging.debug(f"'Go to Catalog' clicked with bandit: {bandit_name}")
-                        create_user_choice(bandit_name=bandit_name, chosen=True)
-                    except IndexError:
-                        logging.error("No bandit mapping available for 'Go to Catalog'.")
+                    create_user_choose_bandit(script_name, True, PROJECT_ID)
                 if st.button("Not Interested", key="button2"):
-                    try:
-                        bandit_name = list(bandit_mapping.keys())[0]
-                        logging.debug(f"'Not Interested' clicked with bandit: {bandit_name}")
-                        create_user_choice(bandit_name=bandit_name, chosen=False)
-                    except IndexError:
-                        logging.error("No bandit mapping available for 'Not Interested'.")
+                    create_user_choose_bandit(script_name, False, PROJECT_ID)
 
     # Convert images to Base64 for the Special Offers section
     special_offer_img1 = get_base64_of_bin_file(os.path.join(SPECIAL_OFFERS_DIR, "special_offer1.jpeg"))
