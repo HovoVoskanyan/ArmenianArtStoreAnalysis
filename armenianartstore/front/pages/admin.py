@@ -1,37 +1,3 @@
-"""
-Streamlit Application for Beta Distribution Visualization in Multi-Armed Bandit Problem.
-
-This application simulates a multi-armed bandit scenario, visualizing the beta distributions
-for a set of bandits. Each bandit represents a potential action with success and failure
-parameters (α and β), which are updated dynamically in real-world scenarios. The application
-uses Streamlit to display the beta distributions in an interactive web interface.
-
-Modules:
-    - streamlit: For creating the web application interface.
-    - numpy: For generating a range of values to calculate the beta distribution.
-    - scipy.stats: For calculating the beta probability density function.
-    - matplotlib: For plotting the beta distributions.
-
-Components:
-    - MockBandit: A class representing a single bandit with associated beta distribution parameters.
-    - generate_bandit_plot: A function to generate and display the beta distribution plot for the bandits.
-
-Features:
-    - Visualize beta distributions for a set of bandits.
-    - Customize the alpha (successes + 1) and beta (failures + 1) parameters for each bandit.
-    - Interactive interface with Streamlit for displaying plots and handling user interactions.
-
-Directory Structure:
-    - app/
-        - Contains the Streamlit application files.
-    - utils/
-        - Contains helper functions or classes if needed (e.g., for more complex multi-armed bandit logic).
-
-Example Use Case:
-    - Run the application to visualize how the probabilities for each bandit evolve as the success
-      and failure counts change in a multi-armed bandit experiment.
-"""
-
 import streamlit as st
 import numpy as np
 import scipy.stats

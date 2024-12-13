@@ -29,7 +29,8 @@ SCRIPT_NAME = os.path.splitext(os.path.basename(__file__))[0]
 # Desired project ID
 PROJECT_ID = 75
 
-def get_bandit_mapping_for_page(project_id, script_name):
+# Generate dynamic mapping for only one bandit for this page
+def map_bandit_for_page(project_id, script_name):
     
     report = get_report(project_id)
 
@@ -42,7 +43,7 @@ def get_bandit_mapping_for_page(project_id, script_name):
     raise ValueError(f"Please enter bandit name as: {SCRIPT_NAME}")
 
 # Generate the mapping for this page
-bandit_mapping = get_bandit_mapping_for_page(PROJECT_ID, SCRIPT_NAME)
+bandit_mapping = map_bandit_for_page(PROJECT_ID, SCRIPT_NAME)
 script_name = list(bandit_mapping.values())[0]
 
 # Set the background image

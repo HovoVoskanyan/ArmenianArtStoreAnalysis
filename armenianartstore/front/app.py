@@ -43,7 +43,7 @@ def map_bandits_to_pages(project_id, existing_pages):
 
 # Generate the pages mapping using bandit_name
 pages = map_bandits_to_pages(PROJECT_ID, existing_pages)
-print(pages)
+
 # Get the corresponding page for the champion bandit
 page = pages.get(champion_bandit)
 

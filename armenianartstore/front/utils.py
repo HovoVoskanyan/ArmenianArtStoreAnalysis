@@ -79,8 +79,3 @@ def get_report(project_id:int):
 
 # df_report = get_report(project_id = 75)
 # print(df_report)
-
-# if __name__ == "__main__":
-#     import os
-#     from os.path import splitext, basename
-#     print(splitext(basename(__file__))[0])
