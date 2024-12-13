@@ -37,8 +37,8 @@ def get_champion(project_id:int):
     else:
         raise ValueError(f"Project with ID {project_id} not found: {response.status_code}")
 
-champion = get_champion(project_id = 1)
-print(champion)
+# champion = get_champion(project_id = 1)
+# print(champion)
 
 def create_user_choose_bandit(bandit_name: str, chosen: bool, project_id:int) -> dict:
     payload = {

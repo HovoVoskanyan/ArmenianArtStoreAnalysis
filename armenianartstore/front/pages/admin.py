@@ -59,6 +59,7 @@ def generate_bandit_plot(bandits):
         alpha = bandit['alpha']  # Get alpha value for the bandit
         beta = bandit['beta']    # Get beta value for the bandit
         bandit_id = bandit['bandit_id']  # Get bandit ID
+        n = alpha + beta - 2
 
         # Special case for alpha = beta = 1 (uniform distribution)
         if alpha == 1 and beta == 1:
@@ -73,7 +74,7 @@ def generate_bandit_plot(bandits):
                 x=x,
                 y=y,
                 mode="lines",
-                name=f"Bandit {bandit_id} (α={alpha}, β={beta})",
+                name=f"Page {bandit_id} (α={alpha}, β={beta}, n={n})",
                 hoverinfo="x+y+name"
             )
         )
