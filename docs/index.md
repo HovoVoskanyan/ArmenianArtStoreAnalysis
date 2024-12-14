@@ -147,6 +147,10 @@ After running `docker-compose up --build`, you can access each component of the 
   - **Email**: Value of `PGADMIN_EMAIL` in your `.env` file
   - **Password**: Value of `PGADMIN_PASSWORD` in your `.env` file
 
+To see the web page, create project via **Swagger UI**, it will return you a project ID. In front folder config.py, change the value of project id to the given id.
+
+Finally, open the **Streamlit** application.
+
 > Note: Ensure Docker is running, and all environment variables in `.env` are correctly configured before accessing these URLs.
 
 When running for the first time, you must create a server. 
