@@ -32,7 +32,19 @@ SCRIPT_NAME = os.path.splitext(os.path.basename(__file__))[0]
 
 # Generate dynamic mapping for only one bandit for this page
 def map_bandit_for_page(project_id, script_name):
-    
+    """
+    Matches the script name to its corresponding bandit and returns the mapping.
+
+    Args:
+    - project_id (str): Unique identifier for the project.
+    - script_name (str): Name of the current script.
+
+    Returns:
+    - dict: Mapping of bandit ID to the script name.
+
+    Raises:
+    - ValueError: If no match is found for the script name in the bandit report.
+    """
     report = get_report(project_id)
 
     for row in report.to_dict(orient="records"):
