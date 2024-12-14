@@ -6,11 +6,6 @@ To open the main web app, visit: [here](http://localhost:8501/)
 
 Additionally, we have an analytical page of our results, which you can access at: [here](http://localhost:8501/admin)
 
-![Admin Page](docs/Admin.png "Adminpage")
-
-![Variant 1](docs/Var1.png "Variant 1")
-![Variant 2](docs/Var2.png "Variant 2")
-![Variant 3](docs/Var3.png "Variant 3")
 
 ### Dockerfile
 
