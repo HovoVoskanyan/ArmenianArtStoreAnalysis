@@ -11,6 +11,10 @@ Hovik Voskanyan Back-End/Api Developer <br>
 
 Created: 25/10/2024
 
+
+## Documentation
+For a more detailed documentation check : https://hovovoskanyan.github.io/ArmenianArtStoreAnalysis/
+
 ## Installation
 
 Before getting started, ensure you have the following prerequisites installed:
@@ -55,8 +59,6 @@ When running for the first time, you must create a server.
   Username: postgres
   Password: group3
 
-## Documentation
-For documentation check : https://hovovoskanyan.github.io/ArmenianArtStoreAnalysis/
 
 ### Project Schema
 ```plaintext
@@ -117,14 +119,6 @@ For documentation check : https://hovovoskanyan.github.io/ArmenianArtStoreAnalys
 └── requirements.txt
 ```
 
-## Docker 
-
-This repository sets up a Docker environment with three main services:
-
-1. **PostgreSQL:** for data storage
-2. **pgAdmin:** for database management and visualization
-3. **ETL:** service for Extract, Transform, Load operations using Python
-
 
 ### ETL
 
@@ -133,6 +127,16 @@ In `models.py`, we have used `sqlalchemy` package, which allows map python objec
 By running `models.py` following objects will be created:
     - sql tables 
     - the corresponding connections
+
+
+## Docker 
+
+This repository sets up a Docker environment with three main services:
+
+1. **PostgreSQL:** for data storage
+2. **pgAdmin:** for database management and visualization
+3. **ETL:** service for Extract, Transform, Load operations using Python
+
 
 ```yaml
 FROM python:3.10-slim-bullseye
@@ -310,6 +314,11 @@ EXPOSE 8501
 # Command to run the Streamlit application
 CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.headless=true", "--server.runOnSave=true"]
 ```
+![Admin Page](docs/Admin.png "Adminpage")
+
+![Variant 1](docs/Var1.png "Variant 1")
+![Variant 2](docs/Var2.png "Variant 2")
+![Variant 3](docs/Var3.png "Variant 3")
 
 ### Service
 
