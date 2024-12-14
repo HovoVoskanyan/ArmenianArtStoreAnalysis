@@ -1,69 +1,63 @@
-"""
-Streamlit Application for Dynamic Random Page Loading.
-
-This module provides a Streamlit-based user interface that randomly selects a page
-from a list of available pages or allows navigation through a sidebar. It demonstrates
-the use of Streamlit's multi-page navigation features, enabling a dynamic user experience.
-
-Modules:
-    - streamlit: For creating the web application interface.
-    - random: For randomly selecting a page from the available list.
-
-Directory Structure:
-    - pages/
-        - Contains the modules for individual pages (e.g., `page1.py`, `page2.py`, etc.).    
-"""
-
+import os
 import streamlit as st
-import random  # For randomly selecting a page
+from config import PROJECT_ID
+from utils import get_champion, get_report
 
-# -----------------------------------------------------
-# Page Configuration
-# -----------------------------------------------------
-st.set_page_config(page_title="Dynamic Random Page Loader", layout="wide")
+# Streamlit Page Configuration
+st.set_page_config(page_title="Dynamic Page Loader", layout="wide")
 
-# -----------------------------------------------------
-# Random Page Selection
-# -----------------------------------------------------
-page = random.choice(["pages/page1.py", "pages/page2.py", "pages/page3.py"])  
+# List existing page files dynamically
+def list_existing_pages(pages_dir="pages"):
+    return sorted([file for file in os.listdir(pages_dir) if file.startswith("page") and file.endswith(".py")])
 
-# -----------------------------------------------------
-# Sidebar Navigation
-# -----------------------------------------------------
+# Fetch the champion bandit (using its ID)
+champion_bandit = get_champion(PROJECT_ID)
+
+# List actual pages in the `pages/` directory
+existing_pages = list_existing_pages()
+
+# Fetch report data and map bandit names to pages
+def map_bandits_to_pages(project_id, existing_pages):
+
+    report = get_report(project_id).to_dict(orient="records")
+
+    # Create a mapping of bandit_name to the corresponding page file
+    pages_mapping = {}
+    for row in report:
+        bandit_name = row["bandit_name"]
+        matched = False
+        for page in existing_pages:
+            # Match bandit_name with page filename (e.g., "page1" matches "page1.py")
+            if bandit_name in page:
+                pages_mapping[bandit_name] = f"pages/{page}"
+                matched = True
+                break
+        if not matched:
+            raise ValueError(
+                f"Please enter bandit name as: {', '.join(set([p.replace('.py', '').rstrip('0123456789') for p in existing_pages]))}"
+            )
+
+    return pages_mapping
+
+# Generate the pages mapping using bandit_name
+pages = map_bandits_to_pages(PROJECT_ID, existing_pages)
+print(pages)
+# Get the corresponding page for the champion bandit
+page = pages.get(champion_bandit[0])
+print(page)
+
 def generate_sidebar_links(tabs: list, label: str = "page"):
-    """
-    Generates sidebar links for navigating between pages.
-
-    **Parameters:**
-    - `tabs (list):` A list of relative paths to the page modules.
-    - `label (str):` The display label for the page in the sidebar (default is "page").
-
-    **Functionality:**
-    Iterates through the list of page paths (`tabs`) and creates a clickable link
-    for each page in Streamlit's sidebar.
-
-    **Example Usage:**
-        tabs = ["pages/page1.py", "pages/page2.py", "pages/admin.py"]
-        generate_sidebar_links(tabs)
-
-    **Raises:**
-    - No exceptions are raised directly by this function, but the `page_link` function
-      depends on the validity of the page paths in the `tabs` list.
-    """
+    
     if not tabs:
         st.error("No pages available to display.")
         st.stop()
 
     for page_id in tabs:
         st.sidebar.page_link(
-            page_id, label=label  # Adds each page as a clickable link in the sidebar
+            page_id, label=label 
         )
 
-# Example usage of the function
-tabs = [page, "pages/admin.py"]  # Example tabs list
+tabs = list(pages.values()) + ["pages/admin.py"] 
 generate_sidebar_links(tabs)
 
-# -----------------------------------------------------
-# Page Switching
-# -----------------------------------------------------
 st.switch_page(page)

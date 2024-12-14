@@ -1,42 +1,11 @@
-"""
-Streamlit Application for Armenian Art Gallery and Store.
-
-This application provides an interactive user interface for showcasing Armenian art,
-including special offers, a catalog of artworks, and a footer with contact details and 
-promotional subscriptions. It uses external CSS for styling and dynamically loads 
-content such as images and layouts.
-
-Modules:
-    - streamlit: For creating the web application interface.
-    - os: For file and directory handling, including resolving relative paths.
-    - base64: For encoding image files to Base64 format for embedding in HTML.
-
-Features:
-    - Header section with a title, navigation buttons, and a search box.
-    - Special Offers section with dynamically loaded images and details.
-    - Catalog section displaying a range of artworks with prices and details.
-    - Footer section with contact information, a subscription box, and social media icons.
-    - Uses external CSS for styling and Base64 encoding for embedding images.
-
-Directory Structure:
-    - styles/
-        - Contains external CSS and helper functions for generating styles (e.g., `style2.css`).
-    - images/
-        - Contains images for special offers, catalog items, and footer icons.
-    - pages/
-        - Contains additional pages for multi-page navigation if integrated.
-    - app.py
-        - Main file to run the application.
-
-Example Use Case:
-    - Displays a visually appealing interface for an art gallery, providing users with a
-      seamless experience to explore and interact with artwork, offers, and promotions.
-"""
-
 import streamlit as st
 from styles.style import *  # Import utility functions for generating HTML and CSS
 import base64
 import os
+import logging
+from os.path import splitext, basename
+from utils import create_user_choose_bandit, get_report
+from config import PROJECT_ID
 
 # Set page configuration
 st.set_page_config(page_title="Armenian Art Gallery and Store", layout="wide")
@@ -55,6 +24,26 @@ FOOTER_DIR = os.path.join(IMAGES_DIR, "footer")
 BACKGROUND_DIR = os.path.join(IMAGES_DIR, "background")
 STYLES_DIR = os.path.join(PROJECT_DIR, "styles")
 
+# Get the script name
+SCRIPT_NAME = os.path.splitext(os.path.basename(__file__))[0]
+
+# Generate dynamic mapping for only one bandit for this page
+def map_bandit_for_page(project_id, script_name):
+    
+    report = get_report(project_id)
+
+    for row in report.to_dict(orient="records"):
+        # Match this script to its corresponding bandit
+        if row["bandit_name"] == script_name:
+            return {row["bandit_id"]: script_name}
+
+    # If no match is found after checking all rows, raise an error
+    raise ValueError(f"Please enter bandit name as: {SCRIPT_NAME.rstrip('0123456789')}")
+
+# Generate the mapping for this page
+bandit_mapping = map_bandit_for_page(PROJECT_ID, SCRIPT_NAME)
+script_name = list(bandit_mapping.values())[0]
+
 # Set the background image
 background_file = os.path.join(BACKGROUND_DIR, "background2.png")
 st.markdown(generate_background_style(background_file), unsafe_allow_html=True)
@@ -68,11 +57,8 @@ def apply_css():
     - FileNotFoundError: If the CSS file does not exist at the specified path.
     """
     css_path = os.path.join(STYLES_DIR, "style2.css")
-    try:
-        with open(css_path, "r") as f:
-            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-    except FileNotFoundError:
-        print(f"CSS file not found: {css_path}")
+    with open(css_path, "r") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # Main function to render the app
 def main():
@@ -98,9 +84,9 @@ def main():
             with button_col:
                 # Buttons for navigation
                 if st.button("Go to Catalog", key="button1"):
-                    st.write("clicked!")
+                    create_user_choose_bandit(script_name, True, PROJECT_ID)
                 if st.button("Not Interested", key="button2"):
-                    st.write("clicked!")
+                    create_user_choose_bandit(script_name, False, PROJECT_ID)
             
             # Display the search box
             st.markdown(get_search_box_html(), unsafe_allow_html=True)
