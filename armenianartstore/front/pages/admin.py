@@ -6,18 +6,33 @@ from utils import get_projects, get_report, create_project  # Import the functio
  
 # Function to fetch bandit data from the backend
 def fetch_real_bandits(project_id):
-        # Fetch the report from the backend
-        df_bandits = get_report(project_id=project_id)
+    """
+    Fetches bandit data for a given project ID from the backend.
 
-        # Create a list of dictionaries for bandits from the DataFrame
-        bandits = [
-            {"bandit_name": row['bandit_name'], "alpha": row['alpha'], "beta": row['beta']}
-            for _, row in df_bandits.iterrows()
-        ]
-        return bandits
+    Args:
+    - project_id (str): The ID of the project for which to fetch bandit data.
+
+    Returns:
+    - list: A list of dictionaries containing bandit names, alpha, and beta values.
+    """
+    # Fetch the report from the backend
+    df_bandits = get_report(project_id=project_id)
+
+    # Create a list of dictionaries for bandits from the DataFrame
+    bandits = [
+        {"bandit_name": row['bandit_name'], "alpha": row['alpha'], "beta": row['beta']}
+        for _, row in df_bandits.iterrows()
+    ]
+    return bandits
 
 # Function to fetch available project IDs
 def fetch_project_ids():
+    """
+    Fetches the available project IDs and descriptions from the backend.
+
+    Returns:
+    - list: A list of tuples containing project IDs and descriptions.
+    """
     df_projects = get_projects()
     # Extract project IDs and descriptions
     project_options = [(row['project_id'], row['project_description']) for _, row in df_projects.iterrows()]
@@ -28,8 +43,11 @@ def generate_bandit_plot(bandits):
     """
     Generates a beta distribution plot for the given bandits using Plotly and displays it in a Streamlit app.
 
-    Parameters:
-    - bandits (list): List of dictionaries containing alpha and beta values.
+    Args:
+    - bandits (list): List of dictionaries containing alpha, beta values, and bandit names.
+
+    Raises:
+    - Exception: If no bandits are provided, displays an error message in Streamlit.
     """
     if not bandits:  # Handle case where no bandits are provided
         st.error("No bandits provided!")
@@ -78,6 +96,9 @@ def generate_bandit_plot(bandits):
 
 # Main application logic
 def main():
+    """
+    Main function to run the Streamlit application. Handles project selection and generates bandit beta distribution plots.
+    """
     # Streamlit title for the section
     st.title("Beta Distributions of Bandits")
     
