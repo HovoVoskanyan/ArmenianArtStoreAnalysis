@@ -1,0 +1,761 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+        <link rel="next" href="etl/">
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#welcome-to-our-bayesian-ab-testing-tool-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="My Docs" class="md-header__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="etl/" class="md-tabs__link">
+        
+  
+    
+  
+  ETL
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="front/" class="md-tabs__link">
+        
+  
+    
+  
+  FRONT
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="back/" class="md-tabs__link">
+        
+  
+    
+  
+  BACK
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="ds/" class="md-tabs__link">
+        
+  
+    
+  
+  DS
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Problem
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solution
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Solution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expected-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expected Outcomes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Expected Outcomes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#impact-on-armenian-artists" class="md-nav__link">
+    <span class="md-ellipsis">
+      Impact on Armenian Artists:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    <span class="md-ellipsis">
+      Services
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Services">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Schema
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access the Application
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="etl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ETL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="front/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FRONT
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="back/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BACK
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ds/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="welcome-to-our-bayesian-ab-testing-tool-documentation">Welcome to Our <strong>Bayesian A/B Testing Tool</strong> Documentation</h1>
+<h2 id="problem"><strong>Problem</strong></h2>
+<p>Armenian artists, renowned for their <strong>rich and culturally significant work</strong>, face challenges in <strong>showcasing and selling their art</strong> to a <strong>global audience</strong>. Despite the growing demand for <strong>unique and authentic artistic creations</strong>, there is <strong>no dedicated online platform</strong> effectively bridging the gap between Armenian artists and <strong>international buyers</strong>.  </p>
+<p>A <strong>well-designed and appealing digital storefront</strong> could create immense opportunities for these artists, allowing them to <strong>expand their reach</strong> and thrive in the <strong>global art market</strong>. However, the main challenge is <strong>identifying the most effective website design</strong> that captivates customers and <strong>encourages interaction</strong>, <strong>browsing</strong>, and <strong>purchases</strong>.  </p>
+<h2 id="solution"><strong>Solution</strong></h2>
+<p>To tackle this issue, we have developed a <strong>Bayesian A/B testing tool</strong> tailored for comparing various <strong>design options</strong> of an art store website.  </p>
+<p>Unlike <strong>traditional A/B testing</strong>, which relies on <strong>fixed sample sizes</strong> and is <strong>time-consuming</strong>, our <strong>Bayesian testing approach</strong> updates <strong>probabilities in real-time</strong>. This enables a <strong>dynamic evaluation process</strong>, identifying the design that resonates with users more efficiently.  </p>
+<h3 id="how-it-works"><strong>How It Works</strong>:</h3>
+<ul>
+<li>Tracks and analyzes <strong>customer behavior</strong>, including:  </li>
+<li>Buttons clicked.  </li>
+<li>Navigation patterns.  </li>
+<li>Provides valuable insights into <strong>user engagement</strong> and <strong>preferences</strong>.  </li>
+<li><strong>Adaptive mechanism</strong>:  </li>
+<li>Prioritizes the <strong>most effective design variant</strong> once sufficient data is collected.  </li>
+<li>Enhances the <strong>overall customer experience</strong>.  </li>
+</ul>
+<h2 id="expected-outcomes"><strong>Expected Outcomes</strong></h2>
+<p>The implementation of this tool will yield several <strong>significant outcomes</strong>:  </p>
+<ol>
+<li><strong>Visual and Quantitative Insights</strong>:  </li>
+<li>Helps website managers understand <strong>visitor interactions</strong> with different design variants.  </li>
+<li>
+<p>Offers a <strong>data-driven approach</strong> for identifying the <strong>best-performing design</strong>.  </p>
+</li>
+<li>
+<p><strong>Broader Marketing and Product Strategies</strong>:  </p>
+</li>
+<li>
+<p>Uncovers <strong>trends</strong> and <strong>preferences</strong> that guide <strong>long-term planning</strong>.  </p>
+</li>
+<li>
+<p><strong>Higher Engagement and Conversion Rates</strong>:  </p>
+</li>
+<li>The <strong>adaptive mechanism</strong> ensures the <strong>optimal design</strong> is prominently displayed.  </li>
+<li>
+<p><strong>Drives better user engagement</strong> and <strong>purchase rates</strong>.  </p>
+</li>
+<li>
+<p><strong>Competitive Edge</strong>:  </p>
+</li>
+<li>Creates a <strong>more engaging and personalized user experience</strong>.  </li>
+<li>Continuously improves the website based on <strong>customer feedback</strong>.  </li>
+</ol>
+<h3 id="impact-on-armenian-artists"><strong>Impact on Armenian Artists</strong>:</h3>
+<ul>
+<li>Provides a platform that <strong>showcases talent</strong> effectively.  </li>
+<li><strong>Builds stronger connections</strong> with a <strong>global audience</strong>.  </li>
+</ul>
+<h2 id="services"><strong>Services</strong></h2>
+<ul>
+<li><strong><code>Etl</code></strong> - <strong>Postgres</strong> database.  </li>
+<li><strong><code>Front</code></strong> - <strong>UI</strong> of our Marketing Analytics Tool and Website <strong>variants</strong> in comparison.  </li>
+<li><strong><code>Back</code></strong> - <strong>Streamlit</strong>, which connects with <strong>Fast API</strong>.  </li>
+<li><strong><code>Ds</code></strong> - <strong>Bayesian A/B testing implementation</strong>.  </li>
+</ul>
+<h3 id="project-schema">Project Schema</h3>
+<pre><code class="language-plaintext">.
+├── .github
+├── ArmenianArtstoreAnalysis
+│   ├── back
+│   │   ├── Database
+│   │   │   ├── __init__.py
+│   │   │   ├── database.py
+│   │   │   ├── models.py
+│   │   │   └── schema.py
+│   │   ├── Models 
+│   │   │   ├── Request
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── request_classes.py
+│   │   │   ├── Response
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── response_classes.py
+│   │   ├── .env
+│   │   ├── Dockerfile
+│   │   ├── main.py
+│   │   └── requirements.txt
+│   ├── etl
+│   │   ├── __init__.py
+│   │   ├── .env
+│   │   ├── crud_testing.py
+│   │   ├── crud.py
+│   │   ├── database.py
+│   │   ├── Dockerfile
+│   │   ├── ERD.png
+│   │   ├── models.py
+│   │   └── requirements.txt
+│   ├── ds
+│   │   ├── __init__.py
+│   │   ├── .env
+│   │   ├── database.py
+│   │   ├── Dockerfile
+│   │   ├── models.py
+│   │   ├── analysis.py
+│   │   └── requirements.txt
+│   ├── front
+│   │   ├── .streamlit
+│   │   │   └── config.toml
+│   │   ├── assets
+│   │   ├── pages
+│   │   ├── styles
+│   │   ├── app.py
+│   │   ├── Dockerfile
+│   │   └── requirements.txt
+│   ├── db_admin 
+│   ├── init.py
+│   ├── .env
+│   ├── docker-compose.yml
+│   ├── documentation
+│   │   ├── mkdocs.yml
+│   │   └── README.md
+└── requirements.txt
+</code></pre>
+<h2 id="installation">Installation</h2>
+<p>Before getting started, ensure you have the following prerequisites installed:</p>
+<ol>
+<li>
+<p>Clone the repository:
+   <code>bash
+   git clone https://github.com/HovoVoskanyan/ArmenianArtStoreAnalysis.git</code></p>
+</li>
+<li>
+<p>Change Directory:
+   <code>bash
+   cd armenianartstore</code></p>
+</li>
+<li>
+<p>Build and start the Docker containers:
+   <code>bash
+   docker-compose up --build</code></p>
+</li>
+</ol>
+<h2 id="access-the-application">Access the Application</h2>
+<p>After running <code>docker-compose up --build</code>, you can access each component of the application at the following URLs:</p>
+<ul>
+<li>
+<p><strong>Streamlit Frontend</strong>: <a href="http://localhost:8501">http://localhost:8501</a><br />
+  The main interface for managing employees, built with Streamlit. Use this to add, view, update, and delete employee records.</p>
+</li>
+<li>
+<p><strong>FastAPI Backend</strong>: <a href="http://localhost:8000">http://localhost:8000</a><br />
+  The backend API where requests are processed. You can use tools like <a href="http://localhost:8000/docs">Swagger UI</a> (provided by FastAPI) to explore the API endpoints and their details.</p>
+</li>
+<li>
+<p><strong>PgAdmin</strong> (optional): <a href="http://localhost:5050">http://localhost:5050</a><br />
+  A graphical tool for PostgreSQL, which allows you to view and manage the database. Login using the credentials set in the <code>.env</code> file:</p>
+</li>
+<li>
+<p><strong>Email</strong>: Value of <code>PGADMIN_EMAIL</code> in your <code>.env</code> file</p>
+</li>
+<li><strong>Password</strong>: Value of <code>PGADMIN_PASSWORD</code> in your <code>.env</code> file</li>
+</ul>
+<p>To see the web page, create project via <strong>Swagger UI</strong>, it will return you a project ID. In front folder config.py, change the value of project id to the given id.</p>
+<p>Finally, open the <strong>Streamlit</strong> application.</p>
+<blockquote>
+<p>Note: Ensure Docker is running, and all environment variables in <code>.env</code> are correctly configured before accessing these URLs.</p>
+</blockquote>
+<p>When running for the first time, you must create a server. </p>
+<p>Hostname: db
+  Maintenance database: ArmenianArtStore
+  Username: postgres
+  Password: group3</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+    
+  </body>
+</html>
